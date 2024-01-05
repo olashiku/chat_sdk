@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ChatSdkAndroid" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/blue_color</item>
+    </style>
+
+    <style name="Theme.ChatSdkAndroid" parent="Base.Theme.ChatSdkAndroid" />
+
+    <style name="Widget.BottomNavigationView"
+        parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/br_firma_medium</item>
+    </style>
+
+    <style name="SelectedBottomNavigationViewTextStyle">
+        <item name="android:textColor">@color/text_blue</item>
+    </style>
+
+    <style name="UnselectedBottomNavigationViewTextStyle">
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+</resources>

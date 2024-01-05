@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ChatSdkAndroid</string>
+    <string name="home">Home</string>
+    <string name="message">Messages</string>
+    <string name="help">Help</string>
+    <string name="news">News</string>
+    <string name="welcomeMessage">Hi there 👋</string>
+    <string name="welcomeSubMessage">How can we help?</string>
+    <string name="send_us_a_message">Send us a message</string>
+    <string name="find_answers">Find your answer now</string>
+    <string name="subtitle_text">%s・%s</string>
+    <string name="see_conversations">See all your conversations</string>
+    <string name="a_few_minutes">A few minutes</string>
+    <string name="send_message">Send us a message</string>
+    <string name="search_for_help">Search for help</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_a_reply">Type a reply...</string>
+    <string name="returning_user">returning_user</string>
+    <string name="lost_connection">Connection has been Lost</string>
+</resources>
