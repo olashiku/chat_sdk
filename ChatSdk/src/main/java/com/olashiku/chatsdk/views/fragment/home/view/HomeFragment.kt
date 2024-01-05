@@ -35,6 +35,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showLoader()
         setupView()
         setupClickListener()
         setupObservers()
@@ -48,6 +49,7 @@ class HomeFragment : BaseFragment() {
         }
 
         authenticationViewModel.getLoginResponse().observe(viewLifecycleOwner) {
+          hideLoader()
             if (it.status.equals(NetworkStatus.allow)) {
                 callOtherApis()
                 if (it.data?.userStatus.equals(UserType.returningUser)) {

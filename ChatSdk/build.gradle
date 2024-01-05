@@ -135,4 +135,6 @@ dependencies {
     implementation "com.github.lisawray.groupie:groupie-databinding:$groupie_version"
     implementation "com.tinder.scarlet:message-adapter-moshi:0.1.10"
 
+    // loader
+    implementation 'com.github.yash786agg:AnimatedLoadingIndicator:v1.3'
 }
