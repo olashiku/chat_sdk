@@ -13,4 +13,6 @@
     <color name="gray_text_color">#737376</color>
     <color name="gray_color_">#F2F2F2</color>
     <color name="blue">#1671D9</color>
+    <color name="sender_blue">#1671D9</color>
+    <color name="button_color">#1671D9</color>
 </resources>

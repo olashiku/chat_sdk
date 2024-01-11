@@ -11,9 +11,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_chatSupportFragment"
-            app:destination="@id/chatSupportFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
         <action
@@ -26,8 +23,8 @@
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" >
         <action
-            android:id="@+id/action_messageFragment_to_chatSupportFragment"
-            app:destination="@id/chatSupportFragment" />
+            android:id="@+id/action_messageFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -39,11 +36,6 @@
         android:name="com.olashiku.chatsdk.views.fragment.news.view.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
-    <fragment
-        android:id="@+id/chatSupportFragment"
-        android:name="com.olashiku.chatsdk.views.fragment.chatsupport.view.ChatSupportFragment"
-        android:label="fragment_chat_support"
-        tools:layout="@layout/fragment_chat_support" />
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.olashiku.chatsdk.views.fragment.chat.view.ChatFragment"

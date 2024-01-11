@@ -18,6 +18,9 @@ interface MessageDao:BaseDao<Messages> {
     @Query("Update Messages set messageStatus ='READ' where msgId =:messageid")
     fun updateMessageById(messageid:String)
 
+    @Query("select * from Messages where sendBy ='me' AND messageStatus = 'UNREAD' ")
+    fun getUnsetMessages() :List<Messages>
+
     @Transaction
     fun updateMessages(messages: List<Messages>){
         deleteMessages()

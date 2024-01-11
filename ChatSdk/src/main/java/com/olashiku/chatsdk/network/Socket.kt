@@ -1,6 +1,7 @@
 package com.olashiku.chatsdk.network
 
 import com.olashiku.chatsdk.model.request.auth.LoginRequest
+import com.olashiku.chatsdk.model.request.connections.ConnectionRequest
 import com.olashiku.chatsdk.model.request.get_messages.GetMessagesRequest
 import com.olashiku.chatsdk.model.request.new_message.NewMessageRequest
 import com.olashiku.chatsdk.model.request.typing.TypingRequest
@@ -22,38 +23,22 @@ interface Socket {
     @Receive
     fun observeWebSocketEvent(): Flowable<WebSocket.Event>
 
-    @Receive
-    fun getUserType():Flowable<String>
-
     @Send
     fun login(subscribe: LoginRequest)
-
-    @Receive
-    fun login(): Flowable<LoginResponse>
 
      @Send
      fun newMessage(newMessageRequest: NewMessageRequest)
 
-     @Receive
-     fun newMessage():Flowable<NewMessageResponse>
-
-    @Receive
-    fun messageDelivered():Flowable<MessageStatusResponse>
 
     @Send
     fun typingMessage(typingRequest: TypingRequest)
 
-    @Receive
-    fun typingMessage():Flowable<TypingResponse>
 
     @Send
     fun getMessages(getMessagesRequest: GetMessagesRequest)
 
-    @Receive
-    fun getMessages():Flowable<GetMessagesResponse>
-
-    @Receive
-    fun getMessage():Flowable<NewMessageRequest>
+    @Send
+    fun getConnection(connectionRequest: ConnectionRequest)
 
     @Receive
     fun observeActions(): Flowable<SocketResponse>

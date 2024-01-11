@@ -8,11 +8,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.olashiku.chatsdk.R
 import com.olashiku.chatsdk.databinding.FragmentMessageBinding
+import com.olashiku.chatsdk.model.response.agent_detail.AgentDetailsResponse
+import com.olashiku.chatsdk.model.response.connection.ConnectionData
+import com.olashiku.chatsdk.storage.PaperPrefs
+import com.olashiku.chatsdk.storage.getAnyPref
+import com.olashiku.chatsdk.viewmodel.ConnectionViewModel
+import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.olashiku.chatsdk.views.base.BaseFragment
+import com.olashiku.chatsdk.views.fragment.message.model.MessageListing
 import com.olashiku.chatsdk.views.fragment.message.model.getMessages
+import com.olashiku.chatsdk.views.fragment.message.model.jsonToList
+import com.squareup.picasso.Picasso
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class MessageFragment : BaseFragment() {
+    val connectionViewModel:ConnectionViewModel by sharedViewModel()
+    val socketViewModel:SocketViewModel by sharedViewModel()
 
     private lateinit var binding: FragmentMessageBinding
 
@@ -27,18 +39,35 @@ class MessageFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
         initClickListener()
+        setupObserver()
+    }
+
+     private fun setupObserver(){
+         connectionViewModel.getConnectionDetails().observe(viewLifecycleOwner){
+             setupRecycler(regularizeMessages(it))
+         }
+     }
+
+     private fun regularizeMessages(connectionData: List<ConnectionData>):List<MessageListing> {
+         val profileImage = paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS).agentList.first().profile_image_url
+         return  connectionData.map { MessageListing(it.connectionName,it.agentId,getLastAgentMessage(it.message),profileImage) }
+     }
+
+   private fun getLastAgentMessage(message:String):String{
+        val messageList = jsonToList(message)
+        return messageList.last().body
     }
 
     private fun initClickListener() {
-        binding.sendMessageButton.setOnClickListener { openFragment(R.id.action_messageFragment_to_chatSupportFragment) }
+        binding.sendMessageButton.setOnClickListener { openFragment(R.id.action_messageFragment_to_chatFragment) }
+    binding.backButton.setOnClickListener { popFragment() }
     }
 
-    private fun initView() {
+    private fun setupRecycler(connectionData: List<MessageListing>) {
         binding.messageRecyclerView.updateRecycler(
             requireContext(),
-            emptyList(),
+            connectionData,
             R.layout.message_blueprint,
             listOf(R.id.titleTextView, R.id.senderTextView, R.id.avatarImageView),
             { innerView, position ->
@@ -48,16 +77,20 @@ class MessageFragment : BaseFragment() {
                 val avatarImageView = innerView.get(R.id.avatarImageView) as ImageView
 
                 avatarImageView.setImageResource(getMessages().get(position).image)
-                titleTextView.setText(getMessages().get(position).message)
+                Picasso.get().load(connectionData.get(position).profileImage).into(avatarImageView);
+                titleTextView.setText(connectionData.get(position).content)
                 senderTextView.setText(
                     getString(
                         R.string.subtitle_text,
-                        getMessages().get(position).recipient,
+                        connectionData.get(position).connectionName,
                         getMessages().get(position).timeStamp
                     )
                 )
+            }, { position ->
+                socketViewModel.getMessages("")
 
-            }, { position -> }, binding.noMessagemageView, binding.noMessageTextView
+
+            }, binding.noMessagemageView, binding.noMessageTextView
         )
 
     }

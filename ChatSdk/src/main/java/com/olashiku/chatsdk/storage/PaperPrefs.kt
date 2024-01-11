@@ -28,6 +28,9 @@ class PaperPrefs {
         val USERSTATUS = "USERSTATUS"
         val CONNECTIONDETAILS = "CONNECTIONDETAILS"
         val USERUUID = "USERUUID"
+        val AGENT_DETAILS = "AGENT_DETAILS"
+        val AGENT_USERNAME = "AGENT_USERNAME"
+
     }
 
     private var context: Context

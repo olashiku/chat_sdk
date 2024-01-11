@@ -18,8 +18,6 @@ class Loader (context: Context){
         progressDialog.setCancelable(false)
     }
 
-
-
      fun showLoader(){
          progressDialog.show()
      }

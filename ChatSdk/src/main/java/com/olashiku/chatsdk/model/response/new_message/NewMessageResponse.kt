@@ -5,6 +5,8 @@ import com.squareup.moshi.Json
 data class NewMessageResponse(
     @Json(name = "action")
     val action: String? = null,
+    @Json(name = "type")
+    val type:String? = null,
     @Json(name = "message")
     val message: Message? = null,
     @Json(name = "msgId")
@@ -14,5 +16,5 @@ data class NewMessageResponse(
     @Json(name = "msgSender")
     val msgSender: MsgSender? = null,
     @Json(name = "msgTimeStamp")
-    val msgTimeStamp: String? = null
+    val msgTimeStamp: Long? = null
 )

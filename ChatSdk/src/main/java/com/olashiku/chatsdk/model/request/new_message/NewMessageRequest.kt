@@ -7,5 +7,5 @@ data class NewMessageRequest(
     val msgPlatform: String,
     val msgReceiver: MsgReceiver? = null,
     val msgSender: MsgSender,
-    val msgTimeStamp: Int
+    val msgTimeStamp: Long
 )

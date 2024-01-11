@@ -1,10 +1,14 @@
 package com.olashiku.chatsdk.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.olashiku.chatsdk.model.Constants
 import com.olashiku.chatsdk.model.NetworkActions
 import com.olashiku.chatsdk.model.request.auth.LoginRequest
 import com.olashiku.chatsdk.model.request.auth.MsgSender
+import com.olashiku.chatsdk.model.request.connections.ConnectionRequest
+import com.olashiku.chatsdk.model.request.connections.Data
 import com.olashiku.chatsdk.model.request.get_messages.GetMessagesRequest
 import com.olashiku.chatsdk.model.request.get_messages.Query
 import com.olashiku.chatsdk.model.request.new_message.Message
@@ -23,7 +27,6 @@ import timber.log.Timber
 
 class SocketViewModel(private val socketRepository: SocketRepository):BaseViewModel() {
 
-
     fun initSocket(){
         viewModelScope.launch {
             socketRepository.startSocket()
@@ -41,13 +44,11 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
          socketRepository.loginUser(request)
      }
 
-    fun getMessages(){
-        val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
-        val query = Query(paperPrefs.getStringPref(PaperPrefs.USERID),paperPrefs.getStringPref(PaperPrefs.ORGID),"1","20",recipient.userId?:"")
+    fun getMessages(agentUserName:String){
+        val query = Query(paperPrefs.getStringPref(PaperPrefs.USERID),paperPrefs.getStringPref(PaperPrefs.ORGID),"0","10",agentUserName)
         val request = GetMessagesRequest(NetworkActions.getMessage,Utils.getUniqueRef(),query)
         socketRepository.getMessage(request)
     }
-
 
     fun newMessage(text:String, messageType:String) {
         val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
@@ -62,23 +63,35 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
         socketRepository.newMessage(request)
     }
 
-
-     fun typingMessages(){
+     fun typingMessages(status:Boolean){
          val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
          val receiver = com.olashiku.chatsdk.model.request.typing.MsgReceiver("", recipient.userId?:"")
          val sender = com.olashiku.chatsdk.model.request.typing.MsgSender(
              Utils.getDeviceDetails(),
              paperPrefs.getStringPref(PaperPrefs.ORGID),
-             paperPrefs.getStringPref(PaperPrefs.USERID)
+             paperPrefs.getStringPref(PaperPrefs.USERID),
+             status
          )
          val request = TypingRequest(NetworkActions.typing,"", Constants.platform,receiver,sender,"")
 
          socketRepository.typingMessage(request)
      }
 
+    fun getConnection(){
+        val request = ConnectionRequest(NetworkActions.connection, Data(  paperPrefs.getStringPref(PaperPrefs.ORGID),  paperPrefs.getStringPref(PaperPrefs.USERID)),Utils.getUniqueRef())
+        socketRepository.getConnection(request)
+    }
 
+
+    fun destroySocket(){
+        socketRepository.destroySocket()
+    }
 
     fun checkSocketConnection():Boolean{
         return socketRepository.isSocketAlive()
     }
+
+     fun getConnectionStatus():MutableLiveData<Boolean>{
+         return socketRepository.getConnectionStatus()
+     }
 }

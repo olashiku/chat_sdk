@@ -2,7 +2,7 @@ package com.olashiku.chatsdk.model.response.get_messages
 
 data class Content(
     val body: String? = "",
-    val feTimeStamp: Int? = null,
+    val feTimeStamp: Long? = null,
     val id: String? = null,
     val msgRead: Boolean? = null,
     val msgType: String? = null,

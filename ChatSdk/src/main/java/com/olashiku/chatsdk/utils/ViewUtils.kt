@@ -2,6 +2,7 @@ package com.olashiku.chatsdkandroid.utils
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable.Orientation
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper

@@ -1,16 +1,17 @@
 package com.olashiku.chatsdk.module
 
 import android.app.Application
+import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.olashiku.chatsdk.network.Api
 import com.olashiku.chatsdk.network.Socket
 import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.getStringPref
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
 import com.tinder.scarlet.Lifecycle
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.lifecycle.android.AndroidLifecycle
 import com.tinder.scarlet.messageadapter.gson.GsonMessageAdapter
-import com.tinder.scarlet.messageadapter.moshi.MoshiMessageAdapter
 import com.tinder.scarlet.retry.LinearBackoffStrategy
 import com.tinder.scarlet.streamadapter.rxjava2.RxJava2StreamAdapterFactory
 import com.tinder.scarlet.websocket.okhttp.newWebSocketFactory
@@ -19,12 +20,20 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
+import retrofit2.CallAdapter
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+
+const val DEV_BASE_URL = "https://api.ghabie.com/"
 val network = module{
-//    single {
-//        createRubiesSocket<Socket>(okHttpClient(),androidApplication())
-//    }
+    single {
+        createWebService<Api>(
+            RxJava2CallAdapterFactory.create(),
+            DEV_BASE_URL,get())
+
+    }
 
     single {
         createRubiesSocket<Socket>(okHttpClient(get()),androidApplication(), paperPrefs = get())
@@ -34,8 +43,21 @@ val network = module{
 
 }
 
+inline fun <reified T> createWebService(
+    factory: CallAdapter.Factory, baseUrl: String, paperPrefs: PaperPrefs
+): T {
+    val retrofit = Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addCallAdapterFactory(factory)
+        .client(okHttpClient(paperPrefs))
+        .build()
+    return retrofit.create(T::class.java)
+}
+
 inline fun <reified T>  createRubiesSocket (okHttpClient: OkHttpClient, application: Application, paperPrefs: PaperPrefs) : T {
-    val BACKOFF_STRATEGY = LinearBackoffStrategy(8000)
+    val BACKOFF_STRATEGY = LinearBackoffStrategy(1000)
     val scarletInstance = Scarlet.Builder()
         .webSocketFactory(okHttpClient.newWebSocketFactory(getRubiesSocketUrl(paperPrefs.getStringPref(PaperPrefs.USERID))))
         .addMessageAdapterFactory(GsonMessageAdapter.Factory())
@@ -74,8 +96,6 @@ fun loggingInterceptor() = HttpLoggingInterceptor().apply {
 fun headersInterceptor(paperPrefs: PaperPrefs) = Interceptor { chain ->
     chain.proceed(chain.request().newBuilder()
         .addHeader("Content-Type", "application/json")
-        .addHeader("Authorization", paperPrefs.getStringPref(PaperPrefs.USERID))
-        // .addHeader("conversationId", paperPrefs.getStringPref(PaperPrefs.CONVERSATION_TOKEN))
         .build())
 
 }
@@ -88,23 +108,4 @@ private fun createOkHttpClient(): OkHttpClient {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         })
         .build()
-}
-
-private fun createAndroidLifecycle(application: Application): Lifecycle {
-    return AndroidLifecycle.ofApplicationForeground(application)
-}
-
-private val jsonMoshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
-
-// A Retrofit inspired WebSocket client for Kotlin, Java, and Android, that supports websockets.
-private fun createScarlet(okHttpClient: OkHttpClient, lifecycle: Lifecycle): Socket {
-    return Scarlet.Builder()
-        .webSocketFactory(okHttpClient.newWebSocketFactory("wss://bshy152j23.execute-api.eu-central-1.amazonaws.com/dev"))
-        .lifecycle(lifecycle)
-        .addMessageAdapterFactory(MoshiMessageAdapter.Factory(jsonMoshi))
-        .addStreamAdapterFactory(RxJava2StreamAdapterFactory())
-        .build()
-        .create()
 }

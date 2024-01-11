@@ -19,18 +19,23 @@ open class BaseFragment: Fragment(), NavigationActions {
 
     val paperPrefs:PaperPrefs by inject(PaperPrefs::class.java)
 
-   lateinit var loader: Loader
+    var loader: Loader? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loader = Loader(requireContext())
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        loader = null
+    }
+
     fun showLoader(){
-        loader.showLoader()
+        loader?.showLoader()
     }
 
      fun hideLoader(){
-         loader.hideLoader()
+         loader?.hideLoader()
      }
 
     override fun openFragment(action: Int, showBottomNavigation: Boolean) {

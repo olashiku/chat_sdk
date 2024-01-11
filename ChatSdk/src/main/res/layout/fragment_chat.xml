@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".views.fragment.chat.view.ChatFragment">
 
@@ -20,8 +21,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
-        android:src="@drawable/profile_image"
-        app:civ_border_width="2dp"
+        app:civ_border_width="1dp"
+        android:src="@drawable/ic_people"
+        app:civ_border_color="#3047EC"
+        app:civ_circle_background_color="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
         app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +69,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="3dp"
         android:fontFamily="@font/br_firma_regular"
-        android:text="Typing..."
+        android:text="Online"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
@@ -76,11 +79,14 @@
         android:id="@+id/chatRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:reverseLayout="true"
+        app:stackFromEnd="false" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -160,7 +166,7 @@
             app:layout_constraintStart_toStartOf="@+id/attachmentButton"
             app:layout_constraintTop_toTopOf="@+id/attachmentButton" />
 
-        <EditText
+        <com.olashiku.chatsdk.utils.CustomTypingEditText
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

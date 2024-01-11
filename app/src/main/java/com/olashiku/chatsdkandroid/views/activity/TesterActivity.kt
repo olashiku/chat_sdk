@@ -16,12 +16,12 @@ class TesterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        binding.button.setOnClickListener {
+        binding.backButton.setOnClickListener {
             val openSdk = SdkEntryPointImpl(this)
-            openSdk.startSdk()
             openSdk.setupEntry(EntryModel(
                 "d58eec4e-40d1-40d9-b294-2b3aedb0e196",
                 "Polisl3"))
+            openSdk.startSdk()
         }
     }
 }

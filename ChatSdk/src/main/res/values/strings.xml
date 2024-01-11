@@ -17,5 +17,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="type_a_reply">Type a reply...</string>
     <string name="returning_user">returning_user</string>
-    <string name="lost_connection">Connection has been Lost</string>
+    <string name="lost_connection">retrying connecting...</string>
+    <string name="typing">Typing...</string>
+    <string name="online">Online</string>
+    <string name="average_response_time"> %s minute</string>
 </resources>

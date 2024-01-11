@@ -23,6 +23,14 @@ object Utils {
         Handler(Looper.getMainLooper()).postDelayed({action()},timer)
     }
 
+    fun convertUnixTimestampToDateTime(unixTimestamp: Long): String {
+        val dateFormat = SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault())
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC") // Set the time zone to UTC or any desired time zone
+
+        val date = Date(unixTimestamp * 1000L)
+        return dateFormat.format(date)
+    }
+
     fun getUniqueRef():String{
      return UUID.randomUUID().toString()
     }

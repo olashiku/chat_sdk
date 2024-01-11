@@ -2,7 +2,6 @@ package com.olashiku.chatsdk.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.olashiku.chatsdk.model.NetworkStatus
-import com.olashiku.chatsdk.model.request.auth.LoginRequest
 import com.olashiku.chatsdk.model.response.login.LoginResponse
 import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.savePref
@@ -15,7 +14,7 @@ interface AuthRepository {
 }
 
 
-class AuthRepositoryImpl : BaseRepository(), AuthRepository {
+class AuthRepositoryImpl : BaseSocketRepository(), AuthRepository {
 
     val loginResponseLiveData = MutableLiveData<LoginResponse>()
 
@@ -28,9 +27,8 @@ class AuthRepositoryImpl : BaseRepository(), AuthRepository {
             paperPref.savePref(PaperPrefs.USERSTATUS, response.data?.userStatus ?: "")
             paperPref.savePref(PaperPrefs.CONNECTIONDETAILS, response.data?.connection!!)
             paperPref.savePref(PaperPrefs.USERUUID,response.data.useruuid?:"")
-            loginResponseLiveData.postValue(response)
         }
-
+        loginResponseLiveData.postValue(response)
     }
 
     override fun getLoginResponse(): MutableLiveData<LoginResponse> {

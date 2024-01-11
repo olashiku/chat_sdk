@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.olashiku.chatsdk.R
 import com.olashiku.chatsdk.databinding.ActivityMainBinding
+import com.olashiku.chatsdk.viewmodel.AgentViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdkandroid.utils.Utils
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -18,25 +19,29 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val socketViewModel: SocketViewModel by viewModel()
+    private val agentViewModel:AgentViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initializeNavigation()
-        setupViewModel()
+        startSocketConnection()
         setupObservers()
     }
 
-     private fun setupObservers(){
+    private fun setupObservers() {
 
-     }
+        Utils.delayTimer (2000){
+            agentViewModel.getAgents()
+        }
+    }
 
-    private fun setupViewModel() {
-
+    private fun startSocketConnection() {
         socketViewModel.apply {
             initSocket()
         }
+
     }
 
     private fun initializeNavigation() {
@@ -46,13 +51,22 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
-    fun  checkConnectionStatus(performSocketOperation:()->Unit){
-        if(socketViewModel.checkSocketConnection()){
-            performSocketOperation.invoke()
-        } else{
-            Toast.makeText(this, getString(R.string.lost_connection), Toast.LENGTH_SHORT)
-                .show()
+    fun checkConnectionStatus(performSocketOperation: () -> Unit) {
+        socketViewModel.getConnectionStatus().observe(this) {
+            if (it) {
+                performSocketOperation.invoke()
+            } else {
+
+                startSocketConnection()
+                Toast.makeText(this, getString(R.string.lost_connection), Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        socketViewModel.destroySocket()
     }
 
 }

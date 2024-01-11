@@ -2,8 +2,7 @@ package com.olashiku.chatsdk.model.response.get_messages
 
 data class GetMessagesResponse(
     val `data`: Data? = null,
-    val type: String? = null,
-    val status:String? = null
+    val type: String? = null
 )
 
 data class GetMessagesIntroResponse(
