@@ -17,6 +17,7 @@ class TesterActivity : AppCompatActivity() {
 
 
         binding.backButton.setOnClickListener {
+
             val openSdk = SdkEntryPointImpl(this)
             openSdk.setupEntry(EntryModel(
                 "d58eec4e-40d1-40d9-b294-2b3aedb0e196",
