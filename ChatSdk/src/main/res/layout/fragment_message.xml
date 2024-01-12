@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".views.fragment.message.view.MessageFragment">
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/recentMessageView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/blue"
@@ -23,10 +24,10 @@
         android:text="Recent Messages"
         android:textColor="#F8F8F8"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintBottom_toBottomOf="@+id/recentMessageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
+        app:layout_constraintStart_toStartOf="@+id/recentMessageView"
+        app:layout_constraintTop_toTopOf="@+id/recentMessageView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
@@ -38,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/sendMessageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/recentMessageView"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -68,7 +69,7 @@
         android:src="@drawable/no_message_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toBottomOf="@+id/recentMessageView" />
 
     <TextView
         android:id="@+id/noMessageTextView"
@@ -91,9 +92,9 @@
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/cancel_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintBottom_toBottomOf="@+id/recentMessageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
+        app:layout_constraintTop_toTopOf="@+id/recentMessageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

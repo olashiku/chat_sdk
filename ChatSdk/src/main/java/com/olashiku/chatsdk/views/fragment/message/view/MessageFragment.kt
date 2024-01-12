@@ -1,5 +1,6 @@
 package com.olashiku.chatsdk.views.fragment.message.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,18 +15,17 @@ import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.getAnyPref
 import com.olashiku.chatsdk.viewmodel.ConnectionViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
-import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.olashiku.chatsdk.views.base.BaseFragment
 import com.olashiku.chatsdk.views.fragment.message.model.MessageListing
 import com.olashiku.chatsdk.views.fragment.message.model.getMessages
 import com.olashiku.chatsdk.views.fragment.message.model.jsonToList
+import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.squareup.picasso.Picasso
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class MessageFragment : BaseFragment() {
-    val connectionViewModel:ConnectionViewModel by sharedViewModel()
-    val socketViewModel:SocketViewModel by sharedViewModel()
-
+    val connectionViewModel: ConnectionViewModel by sharedViewModel()
+    val socketViewModel: SocketViewModel by sharedViewModel()
     private lateinit var binding: FragmentMessageBinding
 
 
@@ -41,27 +41,44 @@ class MessageFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initClickListener()
         setupObserver()
+        setupView()
     }
 
-     private fun setupObserver(){
-         connectionViewModel.getConnectionDetails().observe(viewLifecycleOwner){
-             setupRecycler(regularizeMessages(it))
-         }
-     }
+    private fun setupView() {
+        if (paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS) != null) {
+            val agentDetails = paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)
+            binding.recentMessageView.setBackgroundColor(Color.parseColor(agentDetails?.bannerColor))
+            binding.sendMessageButton.setBackgroundColor(Color.parseColor(agentDetails?.bannerColor))
+        }
+    }
 
-     private fun regularizeMessages(connectionData: List<ConnectionData>):List<MessageListing> {
-         val profileImage = paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS).agentList.first().profile_image_url
-         return  connectionData.map { MessageListing(it.connectionName,it.agentId,getLastAgentMessage(it.message),profileImage) }
-     }
+    private fun setupObserver() {
+        connectionViewModel.getConnectionDetails().observe(viewLifecycleOwner) {
+            setupRecycler(regularizeMessages(it))
+        }
+    }
 
-   private fun getLastAgentMessage(message:String):String{
+    private fun regularizeMessages(connectionData: List<ConnectionData>): List<MessageListing> {
+        val profileImage =
+            paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)?.agentList?.first()?.profile_image_url
+        return connectionData.map {
+            MessageListing(
+                it.connectionName,
+                it.agentId,
+                getLastAgentMessage(it.message),
+                profileImage?:""
+            )
+        }
+    }
+
+    private fun getLastAgentMessage(message: String): String {
         val messageList = jsonToList(message)
         return messageList.last().body
     }
 
     private fun initClickListener() {
         binding.sendMessageButton.setOnClickListener { openFragment(R.id.action_messageFragment_to_chatFragment) }
-    binding.backButton.setOnClickListener { popFragment() }
+        binding.backButton.setOnClickListener { popFragment() }
     }
 
     private fun setupRecycler(connectionData: List<MessageListing>) {

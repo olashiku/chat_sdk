@@ -19,7 +19,6 @@ import io.reactivex.Flowable
 
 
 interface Socket {
-
     @Receive
     fun observeWebSocketEvent(): Flowable<WebSocket.Event>
 

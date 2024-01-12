@@ -76,6 +76,9 @@ class SocketRepositoryImpl(
                             NetworkActions.connection ->{
                                 connectionRepository.saveConnection(message)
                             }
+                            NetworkActions.online ->{
+                                messageRepository.onlineResponse(message)
+                            }
                         }
                     }
 
@@ -97,7 +100,7 @@ class SocketRepositoryImpl(
                         onConnectionStatus.postValue(true)
                         println("hasLoggedIn $hasLoggedIn")
                         if(hasLoggedIn){
-                            sendBacklogMessages()
+                           // sendBacklogMessages()
                         }
                     }
                 }

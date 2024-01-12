@@ -15,6 +15,7 @@ import com.olashiku.chatsdk.model.request.new_message.NewMessageRequest
 import com.olashiku.chatsdk.model.request.typing.TypingRequest
 import com.olashiku.chatsdk.model.response.login.Connection
 import com.olashiku.chatsdk.model.response.message.Messages
+import com.olashiku.chatsdk.model.response.online_offline.OnlineOfflineStatusResponse
 import com.olashiku.chatsdk.model.response.typing.TypingResponse
 import com.olashiku.chatsdk.repository.MessageRepository
 import com.olashiku.chatsdk.storage.PaperPrefs
@@ -33,7 +34,12 @@ class MessageViewModel(val messageRepository: MessageRepository) :BaseViewModel(
     }
 
      fun getTypingMessageStatus():LiveData<TypingResponse>{
-         return messageRepository.getTypingMessageFlow().asLiveData()
+         return messageRepository.getTypingMessageMutableLiveData()
+     }
+
+
+     fun getOnlineOfflineStatus():LiveData<OnlineOfflineStatusResponse>{
+         return  messageRepository.getOnlineOfflineStatus()
      }
 
 

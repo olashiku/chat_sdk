@@ -8,7 +8,7 @@
     tools:context=".views.fragment.chat.view.ChatFragment">
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/recentMessageView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/blue"
@@ -25,10 +25,35 @@
         android:src="@drawable/ic_people"
         app:civ_border_color="#3047EC"
         app:civ_circle_background_color="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintBottom_toBottomOf="@+id/recentMessageView"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
+
+    <ImageView
+        android:id="@+id/agentBackgroundView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/ic_send_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/recentMessageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/profileAbbrivationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/br_firma_bold"
+        android:text="T"
+        android:textSize="19sp"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/agentBackgroundView"
+        app:layout_constraintEnd_toEndOf="@+id/agentBackgroundView"
+        app:layout_constraintStart_toStartOf="@+id/agentBackgroundView"
+        app:layout_constraintTop_toTopOf="@+id/agentBackgroundView" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/backButton"
@@ -83,7 +108,7 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/recentMessageView"
         app:layout_constraintVertical_bias="0.0"
         app:reverseLayout="true"
         app:stackFromEnd="false" />
@@ -107,7 +132,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/gifButton"
+            android:id="@+id/smileButton"
             android:layout_width="29dp"
             android:layout_height="31dp"
             android:layout_marginEnd="12dp"
@@ -117,7 +142,7 @@
             app:layout_constraintTop_toTopOf="@+id/smileyButton" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/attachmentButton"
+            android:id="@+id/sendMessageButton"
             android:layout_width="29dp"
             android:layout_height="31dp"
             android:layout_marginEnd="20dp"
@@ -132,25 +157,25 @@
             android:layout_height="31dp"
             android:layout_marginEnd="12dp"
             android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="@+id/attachmentButton"
-            app:layout_constraintEnd_toStartOf="@+id/attachmentButton"
-            app:layout_constraintTop_toTopOf="@+id/attachmentButton" />
+            app:layout_constraintBottom_toBottomOf="@+id/sendMessageButton"
+            app:layout_constraintEnd_toStartOf="@+id/sendMessageButton"
+            app:layout_constraintTop_toTopOf="@+id/sendMessageButton" />
 
         <ImageView
-            android:id="@+id/imageView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_gif"
-            app:layout_constraintBottom_toBottomOf="@+id/gifButton"
-            app:layout_constraintEnd_toEndOf="@+id/gifButton"
-            app:layout_constraintStart_toStartOf="@+id/gifButton"
-            app:layout_constraintTop_toTopOf="@+id/gifButton" />
-
-        <ImageView
-            android:id="@+id/imageView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/smileIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@drawable/ic_smiley"
+            app:layout_constraintBottom_toBottomOf="@+id/smileButton"
+            app:layout_constraintEnd_toEndOf="@+id/smileButton"
+            app:layout_constraintStart_toStartOf="@+id/smileButton"
+            app:layout_constraintTop_toTopOf="@+id/smileButton" />
+
+        <ImageView
+            android:id="@+id/attachmentImageView"
+            android:layout_width="16dp"
+            android:layout_height="13dp"
+            android:src="@drawable/ic_attachment"
             app:layout_constraintBottom_toBottomOf="@+id/smileyButton"
             app:layout_constraintEnd_toEndOf="@+id/smileyButton"
             app:layout_constraintStart_toStartOf="@+id/smileyButton"
@@ -158,13 +183,13 @@
 
         <ImageView
             android:id="@+id/imageView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_attachment"
-            app:layout_constraintBottom_toBottomOf="@+id/attachmentButton"
-            app:layout_constraintEnd_toEndOf="@+id/attachmentButton"
-            app:layout_constraintStart_toStartOf="@+id/attachmentButton"
-            app:layout_constraintTop_toTopOf="@+id/attachmentButton" />
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/send_customer_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/sendMessageButton"
+            app:layout_constraintEnd_toEndOf="@+id/sendMessageButton"
+            app:layout_constraintStart_toStartOf="@+id/sendMessageButton"
+            app:layout_constraintTop_toTopOf="@+id/sendMessageButton" />
 
         <com.olashiku.chatsdk.utils.CustomTypingEditText
             android:id="@+id/messageEditText"
@@ -174,13 +199,14 @@
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:inputType="textMultiLine"
             android:fontFamily="@font/br_firma_medium"
             android:hint="@string/type_a_reply"
             android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/gifButton"
+            app:layout_constraintEnd_toStartOf="@+id/smileButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

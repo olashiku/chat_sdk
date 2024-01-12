@@ -20,5 +20,7 @@
     <string name="lost_connection">retrying connecting...</string>
     <string name="typing">Typing...</string>
     <string name="online">Online</string>
+    <string name="offline">Offline</string>
     <string name="average_response_time"> %s minute</string>
+    <string name="contact_support">Sdk cannot be used, please contact support.</string>
 </resources>

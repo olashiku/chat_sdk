@@ -9,7 +9,6 @@ import com.olashiku.chatsdk.R
 import com.olashiku.chatsdk.databinding.ActivityMainBinding
 import com.olashiku.chatsdk.viewmodel.AgentViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
-import com.olashiku.chatsdkandroid.utils.Utils
 import org.koin.android.viewmodel.ext.android.viewModel
 
 open class MainActivity : AppCompatActivity() {
@@ -19,7 +18,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val socketViewModel: SocketViewModel by viewModel()
-    private val agentViewModel:AgentViewModel by viewModel()
+    private val agentViewModel: AgentViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +30,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-
-        Utils.delayTimer (2000){
-            agentViewModel.getAgents()
-        }
+        agentViewModel.getAgents()
     }
 
     private fun startSocketConnection() {

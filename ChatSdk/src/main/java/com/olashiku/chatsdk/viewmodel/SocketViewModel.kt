@@ -53,7 +53,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
     fun newMessage(text:String, messageType:String) {
         val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
         val message = Message(text, Constants.platform, messageType)
-        val receiver = MsgReceiver("", recipient.agentUserName?:"")
+        val receiver = MsgReceiver("", recipient?.agentUserName?:"")
         val sender = com.olashiku.chatsdk.model.request.new_message.MsgSender(
             Utils.getDeviceDetails(),
             paperPrefs.getStringPref(PaperPrefs.ORGID),
@@ -65,7 +65,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
 
      fun typingMessages(status:Boolean){
          val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
-         val receiver = com.olashiku.chatsdk.model.request.typing.MsgReceiver("", recipient.userId?:"")
+         val receiver = com.olashiku.chatsdk.model.request.typing.MsgReceiver(Utils.getUniqueRef(), recipient?.agentUserName?:"")
          val sender = com.olashiku.chatsdk.model.request.typing.MsgSender(
              Utils.getDeviceDetails(),
              paperPrefs.getStringPref(PaperPrefs.ORGID),

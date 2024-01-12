@@ -23,7 +23,6 @@ import com.olashiku.chatsdk.viewmodel.MessageViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdk.views.activity.MainActivity
 import com.olashiku.chatsdk.views.base.BaseFragment
-import com.olashiku.chatsdkandroid.utils.Utils
 import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
@@ -47,40 +46,42 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showLoader()
         setupClickListener()
         setupObservers()
+        setupView()
     }
 
     private fun setupObservers() {
 
-        Utils.delayTimer(3000) {
-            (activity as MainActivity).checkConnectionStatus {
-                socketViewModel.loginUser()
-            }
+        (activity as MainActivity).checkConnectionStatus {
+            socketViewModel.loginUser()
         }
 
-        messageViewModel.getMessagesFromDatabase().observe(viewLifecycleOwner){
-            if(it.isNotEmpty()){
+
+        messageViewModel.getMessagesFromDatabase().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
                 toggleVisibility(true)
                 binding.previousMessageTextView.text = it.last().content
-            }else{
+            } else {
                 toggleVisibility(false)
             }
         }
 
         authenticationViewModel.getLoginResponse().observe(viewLifecycleOwner) {
-           hideLoader()
             if (it.status.equals(NetworkStatus.allow)) {
-                callOtherApis()
                 setupView()
+                 callOtherApis()
                 if (it.data?.userStatus.equals(UserType.returningUser)) {
                     toggleVisibility(true)
                 } else {
                     toggleVisibility(false)
                 }
             } else {
-                Toast.makeText(requireContext(),"Sdk cannot be used, please contact support.",Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.contact_support),
+                    Toast.LENGTH_LONG
+                ).show()
                 requireActivity().finish()
             }
         }
@@ -88,9 +89,8 @@ class HomeFragment : BaseFragment() {
 
     private fun callOtherApis() {
         val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
-        socketViewModel.getMessages(recipient.agentUserName?:"")
+        socketViewModel.getMessages(recipient?.agentUserName ?: "")
         socketViewModel.getConnection()
-
     }
 
 
@@ -120,23 +120,75 @@ class HomeFragment : BaseFragment() {
         binding.sendButton.setOnClickListener {
             openFragment(R.id.action_homeFragment_to_chatFragment)
         }
+
+        binding.sendMessagePlaceHolder.setOnClickListener {
+            openFragment(R.id.action_homeFragment_to_chatFragment)
+        }
     }
 
     private fun setupView() {
-        val agentDetails = paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)
-        binding.welcomeMessageTextView.text =agentDetails.greeting
-        binding.welcomeMessageTextView2.text = agentDetails.intro
-        binding.responseTimeTextView.text = getString(R.string.average_response_time,agentDetails.averageResponseTime.toString())
-        binding.bannerBackground.setBackgroundColor( Color.parseColor(agentDetails.bannerColor))
-        setupAgentImageRecycler(agentDetails.agentList)
+        if (paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS) != null) {
+            val agentDetails = paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)?.let { agentDetails ->
+                val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
+
+                binding.welcomeMessageTextView.text = agentDetails.greeting
+                binding.welcomeMessageTextView2.text = agentDetails.intro
+                binding.responseTimeTextView.text = getString(
+                    R.string.average_response_time,
+                    agentDetails.averageResponseTime.toString()
+                )
+                binding.bannerBackground.setBackgroundColor(Color.parseColor(agentDetails.bannerColor))
+                binding.sendMessageButton.setBackgroundColor(Color.parseColor(agentDetails.bannerColor))
+                binding.sendButton.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+                binding.imageView7.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+                binding.imageView9.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+                binding.imageView10.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+                binding.imageView12.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+                binding.imageView13.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+                binding.imageView14.setColorFilter(
+                    Color.parseColor(agentDetails.bannerColor),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                );
+
+                if (recipient?.profileImageUrl.isNullOrEmpty()){
+                    binding.agentBackgroundView.setColorFilter(Color.parseColor(agentDetails.bannerColor), android.graphics.PorterDuff.Mode.SRC_IN)
+                    binding.profileAbbrivationTextView.setText(agentDetails.agentList.first().first_name.first().toString())
+                } else {
+                    binding.agentBackgroundView.visibility = View.INVISIBLE
+                    binding.profileAbbrivationTextView.visibility = View.INVISIBLE
+                    Picasso.get().load(recipient?.profileImageUrl).into(binding.agentImageView);
+                }
+                setupAgentImageRecycler(agentDetails.agentList)
+            }
+
+        }
+
     }
 
-     private fun setupAgentImageRecycler(agent:List<Agent>){
-         binding.agentImageRecycler.updateRecycler(requireContext(),agent,R.layout.agent_blueprint,
-             listOf(R.id.profile_image),{innerView,position ->
-                 val profileImage = innerView.get(R.id.profile_image) as ImageView
-                 Picasso.get().load(agent.get(position).profile_image_url).into(profileImage);
-             },{})
+    private fun setupAgentImageRecycler(agent: List<Agent>) {
+        binding.agentImageRecycler.updateRecycler(requireContext(), agent, R.layout.agent_blueprint,
+            listOf(R.id.profile_image), { innerView, position ->
+                val profileImage = innerView.get(R.id.profile_image) as ImageView
+                Picasso.get().load(agent.get(position).profile_image_url).into(profileImage);
+            }, {})
 
-     }
+    }
 }

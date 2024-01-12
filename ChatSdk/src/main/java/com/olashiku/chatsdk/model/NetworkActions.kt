@@ -7,6 +7,7 @@ object NetworkActions {
     val messageDelivered = "message_delivered"
     val typing = "typing"
     val connection = "get_connection"
+    val online = "online"
 }
 
 object NetworkStatus {

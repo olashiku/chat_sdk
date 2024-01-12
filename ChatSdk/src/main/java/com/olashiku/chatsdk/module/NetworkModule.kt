@@ -32,7 +32,6 @@ val network = module{
         createWebService<Api>(
             RxJava2CallAdapterFactory.create(),
             DEV_BASE_URL,get())
-
     }
 
     single {
@@ -57,7 +56,7 @@ inline fun <reified T> createWebService(
 }
 
 inline fun <reified T>  createRubiesSocket (okHttpClient: OkHttpClient, application: Application, paperPrefs: PaperPrefs) : T {
-    val BACKOFF_STRATEGY = LinearBackoffStrategy(1000)
+    val BACKOFF_STRATEGY = LinearBackoffStrategy(500)
     val scarletInstance = Scarlet.Builder()
         .webSocketFactory(okHttpClient.newWebSocketFactory(getRubiesSocketUrl(paperPrefs.getStringPref(PaperPrefs.USERID))))
         .addMessageAdapterFactory(GsonMessageAdapter.Factory())

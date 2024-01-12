@@ -1,5 +1,6 @@
 package com.olashiku.chatsdk.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.olashiku.chatsdk.model.Constants
 import com.olashiku.chatsdk.model.request.new_message.NewMessageRequest
@@ -8,6 +9,7 @@ import com.olashiku.chatsdk.model.response.login.Connection
 import com.olashiku.chatsdk.model.response.message.Messages
 import com.olashiku.chatsdk.model.response.message_status.MessageStatusResponse
 import com.olashiku.chatsdk.model.response.new_message.NewMessageResponse
+import com.olashiku.chatsdk.model.response.online_offline.OnlineOfflineStatusResponse
 import com.olashiku.chatsdk.model.response.typing.TypingResponse
 import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.getAnyPref
@@ -25,11 +27,14 @@ interface MessageRepository {
     fun messageDeliveredResponse(message: String)
     fun newMessage(request: NewMessageRequest)
     fun newMessageResponse(message: String)
+    fun onlineResponse(message: String)
+    fun getOnlineOfflineStatus():MutableLiveData<OnlineOfflineStatusResponse>
+
     fun typingMessageResponse(request: String)
     fun getMessagesFromDatabase(): Flow<List<Messages>>
     fun getUnsentMessages(): List<Messages>
     fun getTypingMessageFlow(): Flow<TypingResponse>
-    fun getTypingMessageMutableLiveData(): MutableLiveData<TypingResponse>
+    fun getTypingMessageMutableLiveData(): LiveData<TypingResponse>
 }
 
 class MessageRepositoryImpl(
@@ -38,6 +43,8 @@ class MessageRepositoryImpl(
 
      var typingMessage: TypingResponse? = null
     val typingLiveData = MutableLiveData<TypingResponse>()
+    val onlineLiveData  = MutableLiveData<OnlineOfflineStatusResponse>()
+
 
     override fun getMessageResponse(message: String) {
         val connection = paperPref.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
@@ -61,11 +68,11 @@ class MessageRepositoryImpl(
                                 content.msgType ?: "",
                                 false,
                                 content.body ?: "",
-                                if (content.senderId.equals(connection.userId)) Constants.me else Constants.you,
+                                if (content.senderId.equals(connection?.userId)) Constants.me else Constants.you,
                                 Constants.messageUnread,
                                 content.orgId ?: "",
                                 content.orgId ?: "",
-                                recipient.agentUserName ?: ""
+                                recipient?.agentUserName ?: ""
                             )
                         )
                     }
@@ -98,7 +105,7 @@ class MessageRepositoryImpl(
                     Constants.messageUnread,
                     paperPref.getStringPref(PaperPrefs.ORGID),
                     paperPref.getStringPref(PaperPrefs.USERID),
-                    recipient.agentUserName ?: ""
+                    recipient?.agentUserName ?: ""
 
                 )
             )
@@ -125,12 +132,19 @@ class MessageRepositoryImpl(
                     Constants.messageRead,
                     paperPref.getStringPref(PaperPrefs.ORGID),
                     paperPref.getStringPref(PaperPrefs.USERID),
-                    recipient.agentUserName ?: ""
+                    recipient?.agentUserName ?: ""
 
                 )
             )
         }
     }
+
+    override fun onlineResponse(message: String) {
+        val onlineOffline = message.getObject<OnlineOfflineStatusResponse>()
+        onlineLiveData.postValue(onlineOffline)
+    }
+
+    override fun getOnlineOfflineStatus():MutableLiveData<OnlineOfflineStatusResponse> = onlineLiveData
 
     override fun typingMessageResponse(request: String) {
         val typingResponse = request.getObject<TypingResponse>()
@@ -144,7 +158,7 @@ class MessageRepositoryImpl(
         return flowOf(typingMessage?: TypingResponse())
     }
 
-    override fun getTypingMessageMutableLiveData(): MutableLiveData<TypingResponse> {
+    override fun getTypingMessageMutableLiveData(): LiveData<TypingResponse> {
         return typingLiveData
     }
 

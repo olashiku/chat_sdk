@@ -85,10 +85,10 @@ class PaperPrefs {
     }
 
 
-    private fun <T : Any> getAnyFromPref(key: String): T {
+    private fun <T : Any?> getAnyFromPref(key: String): T? {
         return runBlocking {
             async(Dispatchers.IO) {
-                Paper.book().read(key) as T
+                    Paper.book().read(key) as T?
             }.await()
         }
     }
@@ -123,7 +123,7 @@ class PaperPrefs {
         return getBooleanFromPref(this, default)
     }
 
-    fun <T : Any> String.getAnyPref(): T {
+    fun <T : Any?> String.getAnyPref(): T? {
         return getAnyFromPref(this)
     }
 
@@ -166,7 +166,7 @@ fun PaperPrefs.getBooleanPref(key: String, defaultValue: Boolean): Boolean {
     return key.getBooleanPref(defaultValue)
 }
 
-fun <T : Any> PaperPrefs.getAnyPref(key: String): T {
+fun <T : Any?> PaperPrefs.getAnyPref(key: String): T? {
     return key.getAnyPref()
 }
 
