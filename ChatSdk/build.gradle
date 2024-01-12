@@ -141,4 +141,5 @@ dependencies {
 
     //emoji
     implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
+
 }
