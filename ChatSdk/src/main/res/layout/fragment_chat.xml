@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".views.fragment.chat.view.ChatFragment">
 
     <View
@@ -21,9 +21,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
-        app:civ_border_width="1dp"
         android:src="@drawable/ic_people"
         app:civ_border_color="#3047EC"
+        app:civ_border_width="1dp"
         app:civ_circle_background_color="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/recentMessageView"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
@@ -47,9 +47,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/br_firma_bold"
         android:text="T"
-        android:textSize="19sp"
         android:textAllCaps="true"
         android:textColor="@color/black"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="@+id/agentBackgroundView"
         app:layout_constraintEnd_toEndOf="@+id/agentBackgroundView"
         app:layout_constraintStart_toStartOf="@+id/agentBackgroundView"
@@ -103,12 +103,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recentMessageView"
-        app:layout_constraintVertical_bias="0.0"
         app:reverseLayout="true"
         app:stackFromEnd="false" />
 

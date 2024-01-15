@@ -52,7 +52,6 @@ open class MainActivity : AppCompatActivity() {
             if (it) {
                 performSocketOperation.invoke()
             } else {
-
                 startSocketConnection()
                 Toast.makeText(this, getString(R.string.lost_connection), Toast.LENGTH_SHORT)
                     .show()
