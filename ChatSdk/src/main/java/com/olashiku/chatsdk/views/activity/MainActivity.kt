@@ -41,8 +41,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeNavigation() {
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
         navController = navHostFragment.navController
     }
 
