@@ -19,9 +19,9 @@ class SdkEntryPointImpl(val activity: Activity) : SdkEntryPoint {
     val paperPrefs:PaperPrefs by inject(PaperPrefs::class.java)
 
     override fun startSdk() {
-        Utils.delayTimer {
+
             activity.startActivity(Intent(activity, MainActivity::class.java))
-        }
+
     }
 
     override fun setupEntry(entryModel: EntryModel){
