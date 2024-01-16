@@ -13,8 +13,6 @@
     <string name="a_few_minutes">A few minutes</string>
     <string name="send_message">Send us a message</string>
     <string name="search_for_help">Search for help</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="type_a_reply">Type a reply...</string>
     <string name="returning_user">returning_user</string>
     <string name="lost_connection">retrying connecting...</string>
