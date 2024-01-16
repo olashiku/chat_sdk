@@ -1,12 +1,11 @@
 package com.olashiku.chatsdk
 
-import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import com.olashiku.chatsdk.model.EntryModel
 import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.savePref
-import com.olashiku.chatsdk.views.activity.MainActivity
+import com.olashiku.chatsdk.views.activity.SdkActivity
 import org.koin.java.KoinJavaComponent.inject
 
 interface SdkEntryPoint {
@@ -21,7 +20,7 @@ class SdkEntryPointImpl(val application: Application) : SdkEntryPoint {
     override fun startSdk() {
 
          //   activity.startActivity(Intent(application, MainActivity::class.java))
-        val intent = Intent(application, MainActivity::class.java)
+        val intent = Intent(application, SdkActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         application.startActivity(intent)
     }

@@ -21,7 +21,7 @@ import com.olashiku.chatsdk.storage.getAnyPref
 import com.olashiku.chatsdk.viewmodel.AuthenticationViewModel
 import com.olashiku.chatsdk.viewmodel.MessageViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
-import com.olashiku.chatsdk.views.activity.MainActivity
+import com.olashiku.chatsdk.views.activity.SdkActivity
 import com.olashiku.chatsdk.views.base.BaseFragment
 import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.squareup.picasso.Picasso
@@ -53,7 +53,7 @@ class HomeFragment : BaseFragment() {
 
     private fun setupObservers() {
 
-        (activity as MainActivity).checkConnectionStatus {
+        (activity as SdkActivity).checkConnectionStatus {
             socketViewModel.loginUser()
         }
 

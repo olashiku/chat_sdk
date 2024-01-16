@@ -8,14 +8,14 @@ import com.olashiku.chatsdk.viewmodel.AgentViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-open class MainActivity : AppCompatActivity() {
+open class SdkActivity : AppCompatActivity() {
 
     private val socketViewModel: SocketViewModel by viewModel()
     private val agentViewModel: AgentViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_sdk)
 
         //   initializeNavigation()
         startSocketConnection()
