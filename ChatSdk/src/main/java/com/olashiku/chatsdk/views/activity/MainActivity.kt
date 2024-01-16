@@ -24,7 +24,7 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    //    initializeNavigation()
+        initializeNavigation()
         startSocketConnection()
         setupObservers()
     }
@@ -40,10 +40,11 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-//    private fun initializeNavigation() {
-//        navHostFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
-//        navController = navHostFragment.navController
-//    }
+    private fun initializeNavigation() {
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        navController = navHostFragment.navController
+    }
 
 
     fun checkConnectionStatus(performSocketOperation: () -> Unit) {
