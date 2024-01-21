@@ -2,6 +2,7 @@ package com.olashiku.chatsdk.storage
 
 import android.app.Application
 import android.content.Context
+import androidx.annotation.Keep
 import io.paperdb.Paper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -9,6 +10,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 
+@Keep
 class PaperPrefs {
     constructor(application: Application) {
         Paper.init(application)
@@ -34,7 +36,7 @@ class PaperPrefs {
     }
 
     private var context: Context
-    private fun getStringFromPref(key: String): String {
+    private fun getStringFromPref(key: String): String? {
         return runBlocking {
             async(Dispatchers.IO) {
                 Paper.book().read(key, "")
@@ -42,7 +44,7 @@ class PaperPrefs {
         }
     }
 
-    private fun getStringFromPref(key: String, deafult: String): String {
+    private fun getStringFromPref(key: String, deafult: String): String? {
         return runBlocking {
             async(Dispatchers.IO) {
                 Paper.book().read(key, deafult)
@@ -58,7 +60,7 @@ class PaperPrefs {
         }
     }
 
-    private fun getBooleanFromPref(key: String): Boolean {
+    private fun getBooleanFromPref(key: String): Boolean? {
         return runBlocking {
             async(Dispatchers.IO) {
                 Paper.book().read(key, false)
@@ -66,7 +68,7 @@ class PaperPrefs {
         }
     }
 
-    private fun getBooleanFromPref(key: String, defaultvalue: Boolean): Boolean {
+    private fun getBooleanFromPref(key: String, defaultvalue: Boolean): Boolean? {
         return runBlocking {
             async(Dispatchers.IO) {
                 Paper.book().read(key, defaultvalue)
@@ -102,11 +104,11 @@ class PaperPrefs {
     }
 
 
-    fun String.getStringPref(): String {
+    fun String.getStringPref(): String? {
         return getStringFromPref(this)
     }
 
-    fun String.getStringPref(default: String): String {
+    fun String.getStringPref(default: String): String? {
         return getStringFromPref(this, default)
     }
 
@@ -115,11 +117,11 @@ class PaperPrefs {
         saveStringToPref(this, value)
     }
 
-    fun String.getBooleanPref(): Boolean {
+    fun String.getBooleanPref(): Boolean? {
         return getBooleanFromPref(this)
     }
 
-    fun String.getBooleanPref(default: Boolean): Boolean {
+    fun String.getBooleanPref(default: Boolean): Boolean? {
         return getBooleanFromPref(this, default)
     }
 
@@ -154,15 +156,15 @@ fun PaperPrefs.savePref(key: String, value: Any) {
     }
 }
 
-fun PaperPrefs.getStringPref(key: String): String {
+fun PaperPrefs.getStringPref(key: String): String? {
     return key.getStringPref()
 }
 
-fun PaperPrefs.getBooleanPref(key: String): Boolean {
+fun PaperPrefs.getBooleanPref(key: String): Boolean? {
     return key.getBooleanPref()
 }
 
-fun PaperPrefs.getBooleanPref(key: String, defaultValue: Boolean): Boolean {
+fun PaperPrefs.getBooleanPref(key: String, defaultValue: Boolean): Boolean? {
     return key.getBooleanPref(defaultValue)
 }
 

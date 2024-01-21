@@ -35,8 +35,8 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
 
      fun loginUser(){
          val sender = MsgSender(
-             Utils.getDeviceDetails(), paperPrefs.getStringPref(PaperPrefs.ORGID), paperPrefs.getStringPref(
-                 PaperPrefs.USERID))
+             Utils.getDeviceDetails(), paperPrefs.getStringPref(PaperPrefs.ORGID)?:"", paperPrefs.getStringPref(
+                 PaperPrefs.USERID)?:"")
          val request = LoginRequest(
              NetworkActions.auth, "1232a23",
              "{lat:38.8951, log:-77.0364}", "Android", sender, "1698495947"
@@ -45,7 +45,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
      }
 
     fun getMessages(agentUserName:String){
-        val query = Query(paperPrefs.getStringPref(PaperPrefs.USERID),paperPrefs.getStringPref(PaperPrefs.ORGID),"0","10",agentUserName)
+        val query = Query(paperPrefs.getStringPref(PaperPrefs.USERID)?:"",paperPrefs.getStringPref(PaperPrefs.ORGID)?:"","0","10",agentUserName)
         val request = GetMessagesRequest(NetworkActions.getMessage,Utils.getUniqueRef(),query)
         socketRepository.getMessage(request)
     }
@@ -56,8 +56,8 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
         val receiver = MsgReceiver("", recipient?.agentUserName?:"")
         val sender = com.olashiku.chatsdk.model.request.new_message.MsgSender(
             Utils.getDeviceDetails(),
-            paperPrefs.getStringPref(PaperPrefs.ORGID),
-            paperPrefs.getStringPref(PaperPrefs.USERID)
+            paperPrefs.getStringPref(PaperPrefs.ORGID)?:"",
+            paperPrefs.getStringPref(PaperPrefs.USERID)?:""
         )
         val request = NewMessageRequest(NetworkActions.newMessage, message, Utils.getUniqueRef(), Constants.platform, receiver, sender, 0)
         socketRepository.newMessage(request)
@@ -68,8 +68,8 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
          val receiver = com.olashiku.chatsdk.model.request.typing.MsgReceiver(Utils.getUniqueRef(), recipient?.agentUserName?:"")
          val sender = com.olashiku.chatsdk.model.request.typing.MsgSender(
              Utils.getDeviceDetails(),
-             paperPrefs.getStringPref(PaperPrefs.ORGID),
-             paperPrefs.getStringPref(PaperPrefs.USERID),
+             paperPrefs.getStringPref(PaperPrefs.ORGID)?:"",
+             paperPrefs.getStringPref(PaperPrefs.USERID)?:"",
              status
          )
          val request = TypingRequest(NetworkActions.typing,"", Constants.platform,receiver,sender,"")
@@ -78,7 +78,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
      }
 
     fun getConnection(){
-        val request = ConnectionRequest(NetworkActions.connection, Data(  paperPrefs.getStringPref(PaperPrefs.ORGID),  paperPrefs.getStringPref(PaperPrefs.USERID)),Utils.getUniqueRef())
+        val request = ConnectionRequest(NetworkActions.connection, Data(  paperPrefs.getStringPref(PaperPrefs.ORGID)?:"",  paperPrefs.getStringPref(PaperPrefs.USERID)?:""),Utils.getUniqueRef())
         socketRepository.getConnection(request)
     }
 

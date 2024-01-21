@@ -24,6 +24,7 @@ import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdk.views.activity.SdkActivity
 import com.olashiku.chatsdk.views.base.BaseFragment
 import com.olashiku.chatsdkandroid.utils.updateRecycler
+import com.olashiku.chatsdkandroid.utils.updateRecyclerHorizontal
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -184,7 +185,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupAgentImageRecycler(agent: List<Agent>) {
-        binding.agentImageRecycler.updateRecycler(requireContext(), agent, R.layout.agent_blueprint,
+        binding.agentImageRecycler.updateRecyclerHorizontal(requireContext(), agent, R.layout.agent_blueprint,
             listOf(R.id.profile_image), { innerView, position ->
                 val profileImage = innerView.get(R.id.profile_image) as ImageView
                 Picasso.get().load(agent.get(position).profile_image_url).into(profileImage);

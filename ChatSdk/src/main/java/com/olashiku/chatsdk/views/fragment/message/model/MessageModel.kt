@@ -15,19 +15,12 @@ data class MessageListing(
     val connectionName:String,
     val agentId:String,
     val content:String,
-    val profileImage:String
+    val profileImage:String,
+    val timeStamp:Int
+
 )
 
- fun getMessages():List<MessageModel>{
-     return listOf(
-         MessageModel(R.drawable.ic_avatar,"Hi there. I’m Bothrs Assistant. How can I help you?","Customer Service","1d ago"),
-         MessageModel(R.drawable.ic_avatar,"Hi there. I’m Bothrs Assistant. How can I help you?","Customer Service","1d ago"),
-         MessageModel(R.drawable.ic_avatar,"Hi there. I’m Bothrs Assistant. How can I help you?","Customer Service","1d ago"),
-         MessageModel(R.drawable.ic_avatar,"Hi there. I’m Bothrs Assistant. How can I help you?","Customer Service","1d ago"),
-         MessageModel(R.drawable.ic_avatar,"Hi there. I’m Bothrs Assistant. How can I help you?","Customer Service","1d ago"),
-         )
 
- }
 
 fun jsonToList(jsonArray: String): List<Message> {
     val gson = Gson()

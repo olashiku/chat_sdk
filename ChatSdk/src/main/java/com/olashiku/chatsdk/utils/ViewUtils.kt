@@ -2,7 +2,6 @@ package com.olashiku.chatsdkandroid.utils
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable.Orientation
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -115,6 +114,30 @@ fun RecyclerView.updateRecycler(
     return adapter
 }
 
+
+
+fun RecyclerView.updateRecyclerHorizontal(
+    context: Context,
+    listOfItems: List<Any>,
+    layout: Int,
+    listOfLayout: List<Int>,
+    binder: (Map<Int, View>, Int) -> Unit,
+    onClickPosition: (Int) -> Unit
+): RecyclerView.Adapter<*>? {
+    this.layoutManager = LinearLayoutManager(context).apply {
+        orientation = LinearLayoutManager.HORIZONTAL
+    }
+    val reyclerAdaptor = RecyclerAdapterUtil(context, listOfItems, layout)
+    reyclerAdaptor.addViewsList(listOfLayout)
+    reyclerAdaptor.addOnDataBindListener { itemView, item, position, innerViews ->
+        binder(innerViews, position)
+    }
+    reyclerAdaptor.addOnClickListener { item, position -> onClickPosition(position) }
+
+    this.adapter = reyclerAdaptor
+
+    return adapter
+}
 
 fun RecyclerView.updateChatRecycler(
     context: Context,

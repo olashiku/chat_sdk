@@ -27,7 +27,7 @@
         android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="@+id/leftGuide"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_avatar" />
+        app:srcCompat="@drawable/profile_image" />
 
     <TextView
         android:id="@+id/titleTextView"

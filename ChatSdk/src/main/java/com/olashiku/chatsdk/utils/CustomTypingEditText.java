@@ -7,9 +7,10 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
+import androidx.appcompat.widget.AppCompatEditText;
 
-public class CustomTypingEditText extends EmojiconEditText implements TextWatcher {
+
+public class CustomTypingEditText extends AppCompatEditText implements TextWatcher {
     private static final int TypingInterval = 1000;
 
     //your listener interface that you implement anonymously from the Activity

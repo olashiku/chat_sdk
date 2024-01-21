@@ -28,7 +28,9 @@ private class SentMessageHolder constructor(itemView: View) :
     fun bind(message: Messages) {
         messageText.setText(message.content)
         val agentDetails = paperPref.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)
-        messageCardView.setCardBackgroundColor(Color.parseColor(agentDetails?.bannerColor))
+        agentDetails?.let {
+            messageCardView.setCardBackgroundColor(Color.parseColor(agentDetails.bannerColor))
+        }
 
     }
 }

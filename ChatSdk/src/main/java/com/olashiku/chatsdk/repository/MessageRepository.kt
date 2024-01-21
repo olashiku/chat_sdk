@@ -103,8 +103,8 @@ class MessageRepositoryImpl(
                     request.message.content,
                     Constants.me,
                     Constants.messageUnread,
-                    paperPref.getStringPref(PaperPrefs.ORGID),
-                    paperPref.getStringPref(PaperPrefs.USERID),
+                    paperPref.getStringPref(PaperPrefs.ORGID)?:"",
+                    paperPref.getStringPref(PaperPrefs.USERID)?:"",
                     recipient?.agentUserName ?: ""
 
                 )
@@ -124,14 +124,14 @@ class MessageRepositoryImpl(
                     response.msgId ?: "",
                     response.msgTimeStamp ?: 0,
                     response.msgSender?.userId ?: "",
-                    paperPref.getStringPref(PaperPrefs.USERUUID),
+                    paperPref.getStringPref(PaperPrefs.USERUUID)?:"",
                     response.message?.type ?: "",
                     true,
                     response.message?.content ?: "",
                     Constants.you,
                     Constants.messageRead,
-                    paperPref.getStringPref(PaperPrefs.ORGID),
-                    paperPref.getStringPref(PaperPrefs.USERID),
+                    paperPref.getStringPref(PaperPrefs.ORGID)?:"",
+                    paperPref.getStringPref(PaperPrefs.USERID)?:"",
                     recipient?.agentUserName ?: ""
 
                 )

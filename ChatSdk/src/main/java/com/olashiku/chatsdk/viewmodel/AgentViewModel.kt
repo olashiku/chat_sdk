@@ -12,7 +12,8 @@ class AgentViewModel(val agentRepository: AgentRepository):BaseViewModel() {
     val agentDetailsResponse = SingleLiveEvent<AgentDetailsResponse>()
 
     fun getAgents(){
-        val request = paperPrefs.getStringPref(PaperPrefs.ORGID)
+        val request = paperPrefs.getStringPref(PaperPrefs.ORGID)?:""
+        println("requestDetails $request")
         return apiRequestNew(request, agentRepository::getAgent, agentDetailsResponse, { it.greeting })
     }
 }

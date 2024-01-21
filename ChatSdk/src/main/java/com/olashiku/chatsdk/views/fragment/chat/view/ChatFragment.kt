@@ -25,7 +25,6 @@ import com.olashiku.chatsdk.views.fragment.chat.adapter.MessageListAdapter
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import hani.momanii.supernova_emoji_library.Actions.EmojIconActions
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -55,26 +54,16 @@ class ChatFragment : BaseFragment() {
         getKeyPressed()
         setupEditText()
         setupTextChangeListener()
-        setupKeyboardEmojiIcon()
         setupProfileImage()
     }
+
+
 
      private fun setupProfileImage(){
          binding.profileImage
      }
 
-    private fun setupKeyboardEmojiIcon() {
-        val emojIcon = EmojIconActions(
-            requireContext(),
-            view,
-            binding.messageEditText,
-            binding.smileIcon,
-            "#495C66",
-            "#DCE1E2",
-            "#E6EBEF"
-        )
-        emojIcon.ShowEmojIcon()
-    }
+
 
     private fun setupTextChangeListener() {
          binding.messageEditText.setOnTypingModified { view, isTyping ->

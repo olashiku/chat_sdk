@@ -16,7 +16,7 @@ class AgentRepositoryImpl(val api: Api):BaseRepository(),AgentRepository{
 
     @SuppressLint("SuspiciousIndentation")
     override suspend fun getAgent(agentId:String): UseCaseResult<AgentDetailsResponse> {
-    val request = paperPref.getStringPref(PaperPrefs.ORGID)
+    val request = paperPref.getStringPref(PaperPrefs.ORGID)?:""
       return  safeApiCalls(request,api::getAgentDetails,{it.agentList.isNotEmpty()},::saveAgentDetails)
     }
 

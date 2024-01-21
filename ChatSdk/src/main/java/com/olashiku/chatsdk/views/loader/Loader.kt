@@ -13,7 +13,7 @@ class Loader (context: Context){
 
     init {
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        progressDialog.setContentView(com.app.aimatedprogresslib.R.layout.custom_dialog_progress)
+   //     progressDialog.setContentView(com.app.aimatedprogresslib.R.layout.custom_dialog_progress)
         progressDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         progressDialog.setCancelable(false)
     }

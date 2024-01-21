@@ -17,8 +17,8 @@ import com.olashiku.chatsdk.viewmodel.ConnectionViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdk.views.base.BaseFragment
 import com.olashiku.chatsdk.views.fragment.message.model.MessageListing
-import com.olashiku.chatsdk.views.fragment.message.model.getMessages
 import com.olashiku.chatsdk.views.fragment.message.model.jsonToList
+import com.olashiku.chatsdkandroid.utils.Utils
 import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.squareup.picasso.Picasso
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -66,7 +66,8 @@ class MessageFragment : BaseFragment() {
                 it.connectionName,
                 it.agentId,
                 getLastAgentMessage(it.message),
-                profileImage?:""
+                profileImage?:"",
+                it.pairedTimeStamp
             )
         }
     }
@@ -93,14 +94,15 @@ class MessageFragment : BaseFragment() {
                 val senderTextView = innerView.get(R.id.senderTextView) as TextView
                 val avatarImageView = innerView.get(R.id.avatarImageView) as ImageView
 
-                avatarImageView.setImageResource(getMessages().get(position).image)
-                Picasso.get().load(connectionData.get(position).profileImage).into(avatarImageView);
+                if(connectionData.get(position).profileImage.isNotEmpty()){
+                    Picasso.get().load(connectionData.get(position).profileImage).into(avatarImageView);
+                }
                 titleTextView.setText(connectionData.get(position).content)
                 senderTextView.setText(
                     getString(
                         R.string.subtitle_text,
                         connectionData.get(position).connectionName,
-                        getMessages().get(position).timeStamp
+                       Utils.convertUnixTimestampToDateTime(connectionData.get(position).timeStamp.toLong())
                     )
                 )
             }, { position ->
