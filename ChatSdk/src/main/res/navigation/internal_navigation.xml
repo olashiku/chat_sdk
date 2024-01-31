@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.olashiku.chatsdk.views.fragment.home.view.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home_final" >
         <action
             android:id="@+id/action_homeFragment_to_chatFragment"
             app:destination="@id/chatFragment" />

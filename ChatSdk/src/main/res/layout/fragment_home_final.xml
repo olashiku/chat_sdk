@@ -288,7 +288,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recentMessagesPlaceHolder">
 
             <TextView
-                android:id="@+id/senderTextView3"
+                android:id="@+id/agentDetailsTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"

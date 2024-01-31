@@ -31,6 +31,34 @@ object Utils {
         return dateFormat.format(date)
     }
 
+    fun convertUnixTimestampToDate(unixTimestamp: Long): String {
+
+        val currentTime = System.currentTimeMillis()
+        val timeDifferenceMillis = currentTime - unixTimestamp * 1000L
+
+        val seconds = timeDifferenceMillis / 1000 % 60
+        val minutes = timeDifferenceMillis / (60 * 1000) % 60
+        val hours = timeDifferenceMillis / (60 * 60 * 1000) % 24
+        val days = timeDifferenceMillis / (24 * 60 * 60 * 1000)
+
+        println("expecting_time days $days hours $hours minutes $minutes seconds $seconds")
+        return when {
+            days > 0 -> "$days days ago"
+            hours > 0 -> "$hours h ago"
+            minutes > 0 -> "$minutes m ago"
+            seconds > 0 -> "$seconds s ago"
+            else -> "just now"
+        }
+    }
+
+    fun convertUnixTimestampToAmPm(unixTimestamp: Long): String {
+        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        dateFormat.timeZone = TimeZone.getDefault()
+
+        val date = Date(unixTimestamp)
+        return dateFormat.format(date)
+    }
+
     fun getUniqueRef():String{
      return UUID.randomUUID().toString()
     }

@@ -23,6 +23,7 @@ import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.squareup.picasso.Picasso
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
+
 class MessageFragment : BaseFragment() {
     val connectionViewModel: ConnectionViewModel by sharedViewModel()
     val socketViewModel: SocketViewModel by sharedViewModel()
@@ -102,7 +103,7 @@ class MessageFragment : BaseFragment() {
                     getString(
                         R.string.subtitle_text,
                         connectionData.get(position).connectionName,
-                       Utils.convertUnixTimestampToDateTime(connectionData.get(position).timeStamp.toLong())
+                       Utils.convertUnixTimestampToAmPm(connectionData.get(position).timeStamp.toLong())
                     )
                 )
             }, { position ->
@@ -113,5 +114,7 @@ class MessageFragment : BaseFragment() {
         )
 
     }
+
+
 
 }

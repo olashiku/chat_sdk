@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.olashiku.chatsdk.R
-import com.olashiku.chatsdk.databinding.FragmentHomeBinding
+import com.olashiku.chatsdk.databinding.FragmentHomeFinalBinding
 import com.olashiku.chatsdk.extensions.hide
 import com.olashiku.chatsdk.extensions.show
 import com.olashiku.chatsdk.model.NetworkStatus
@@ -23,6 +23,10 @@ import com.olashiku.chatsdk.viewmodel.MessageViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdk.views.activity.SdkActivity
 import com.olashiku.chatsdk.views.base.BaseFragment
+import com.olashiku.chatsdkandroid.utils.Utils.capitalizeWords
+import com.olashiku.chatsdkandroid.utils.Utils.convertUnixTimestampToAmPm
+import com.olashiku.chatsdkandroid.utils.Utils.convertUnixTimestampToDate
+import com.olashiku.chatsdkandroid.utils.Utils.convertUnixTimestampToDateTime
 import com.olashiku.chatsdkandroid.utils.updateRecycler
 import com.olashiku.chatsdkandroid.utils.updateRecyclerHorizontal
 import com.squareup.picasso.Picasso
@@ -32,16 +36,17 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeFinalBinding
     private val socketViewModel: SocketViewModel by inject()
     private val authenticationViewModel: AuthenticationViewModel by inject()
     val messageViewModel: MessageViewModel by sharedViewModel()
+    private  var dataFetched = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentHomeFinalBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -63,6 +68,7 @@ class HomeFragment : BaseFragment() {
             if (it.isNotEmpty()) {
                 toggleVisibility(true)
                 binding.previousMessageTextView.text = it.last().content
+                setupAgentDetails(convertUnixTimestampToAmPm(it.last().timeStamp))
             } else {
                 toggleVisibility(false)
             }
@@ -70,13 +76,19 @@ class HomeFragment : BaseFragment() {
 
         authenticationViewModel.getLoginResponse().observe(viewLifecycleOwner) {
             if (it.status.equals(NetworkStatus.allow)) {
-                setupView()
-                 callOtherApis()
-                if (it.data?.userStatus.equals(UserType.returningUser)) {
-                    toggleVisibility(true)
-                } else {
-                    toggleVisibility(false)
+                if(!dataFetched){
+                    setupView()
+                    callOtherApis()
+
+                    if (it.data?.userStatus.equals(UserType.returningUser)) {
+                        toggleVisibility(true)
+                    } else {
+                        toggleVisibility(false)
+                    }
                 }
+                dataFetched = true
+
+
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -127,9 +139,18 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    private fun setupAgentDetails(currentTime:String){
+        paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)?.let {
+            binding.senderTextView2.setText(it.firstName?.capitalizeWords()+"・" +currentTime)
+
+        }
+
+
+    }
+
     private fun setupView() {
         if (paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS) != null) {
-            val agentDetails = paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)?.let { agentDetails ->
+            paperPrefs.getAnyPref<AgentDetailsResponse>(PaperPrefs.AGENT_DETAILS)?.let { agentDetails ->
                 val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
 
                 binding.welcomeMessageTextView.text = agentDetails.greeting

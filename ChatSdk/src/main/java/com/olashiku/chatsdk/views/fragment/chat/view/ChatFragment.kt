@@ -34,9 +34,6 @@ class ChatFragment : BaseFragment() {
     private var mMessageAdapter: MessageListAdapter? = null
     val messageViewModel: MessageViewModel by sharedViewModel()
     val socketViewModel: SocketViewModel by sharedViewModel()
-    var delay: Long = 1000 // 1 seconds after user stops typing
-
-    var last_text_edit: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
