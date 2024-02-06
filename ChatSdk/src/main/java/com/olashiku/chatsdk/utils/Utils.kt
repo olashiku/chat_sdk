@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -61,6 +62,16 @@ object Utils {
 
     fun getUniqueRef():String{
      return UUID.randomUUID().toString()
+    }
+
+    fun getCurrentUnixTimestamp(): Long {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            Instant.now().epochSecond
+        } else {
+            val calendar = Calendar.getInstance()
+            val date = calendar.time
+            date.time / 1000
+        }
     }
 
     fun calculateBalance(balance:Float):Float{

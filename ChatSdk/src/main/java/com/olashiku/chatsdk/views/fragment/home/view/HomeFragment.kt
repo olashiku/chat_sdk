@@ -198,6 +198,15 @@ class HomeFragment : BaseFragment() {
                     binding.profileAbbrivationTextView.visibility = View.INVISIBLE
                     Picasso.get().load(recipient?.profileImageUrl).into(binding.agentImageView);
                 }
+
+                if (recipient?.profileImageUrl.isNullOrEmpty()){
+                    binding.profileBackgroundView.setColorFilter(Color.parseColor(agentDetails.bannerColor), android.graphics.PorterDuff.Mode.SRC_IN)
+                    binding.profileTextView.setText(agentDetails.agentList.first().first_name.first().toString())
+                } else {
+                    binding.profileBackgroundView.visibility = View.INVISIBLE
+                    binding.profileTextView.visibility = View.INVISIBLE
+                    Picasso.get().load(recipient?.profileImageUrl).into(binding.profileAvatarIV);
+                }
                 setupAgentImageRecycler(agentDetails.agentList)
             }
 

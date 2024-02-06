@@ -2,7 +2,6 @@ package com.olashiku.chatsdk.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import com.olashiku.chatsdk.model.Constants
 import com.olashiku.chatsdk.model.NetworkActions
 import com.olashiku.chatsdk.model.request.auth.LoginRequest
@@ -21,9 +20,7 @@ import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.getAnyPref
 import com.olashiku.chatsdk.storage.getStringPref
 import com.olashiku.chatsdkandroid.utils.Utils
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class SocketViewModel(private val socketRepository: SocketRepository):BaseViewModel() {
 
@@ -59,7 +56,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
             paperPrefs.getStringPref(PaperPrefs.ORGID)?:"",
             paperPrefs.getStringPref(PaperPrefs.USERID)?:""
         )
-        val request = NewMessageRequest(NetworkActions.newMessage, message, Utils.getUniqueRef(), Constants.platform, receiver, sender, 0)
+        val request = NewMessageRequest(NetworkActions.newMessage, message, Utils.getUniqueRef(), Constants.platform, receiver, sender, Utils.getCurrentUnixTimestamp())
         socketRepository.newMessage(request)
     }
 
@@ -72,7 +69,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
              paperPrefs.getStringPref(PaperPrefs.USERID)?:"",
              status
          )
-         val request = TypingRequest(NetworkActions.typing,"", Constants.platform,receiver,sender,"")
+         val request = TypingRequest(NetworkActions.typing,"", Constants.platform,receiver,sender,Utils.getCurrentUnixTimestamp())
 
          socketRepository.typingMessage(request)
      }

@@ -6,5 +6,5 @@ data class TypingRequest(
     val msgPlatform: String,
     val msgReceiver: MsgReceiver,
     val msgSender: MsgSender,
-    val msgTimeStamp: String
+    val msgTimeStamp: Long
 )

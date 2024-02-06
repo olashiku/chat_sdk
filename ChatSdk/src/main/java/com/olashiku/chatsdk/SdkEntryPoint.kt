@@ -18,8 +18,6 @@ class SdkEntryPointImpl(val application: Application) : SdkEntryPoint {
     val paperPrefs:PaperPrefs by inject(PaperPrefs::class.java)
 
     override fun startSdk() {
-
-         //   activity.startActivity(Intent(application, MainActivity::class.java))
         val intent = Intent(application, SdkActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         application.startActivity(intent)
