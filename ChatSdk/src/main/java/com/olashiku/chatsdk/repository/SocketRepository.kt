@@ -45,7 +45,6 @@ class SocketRepositoryImpl(
     val onConnectionStatus = MutableLiveData<Boolean>()
 
     override suspend fun startSocket() {
-
         disposable1 = socket.observeWebSocketEvent()
             .doOnError { println(it) }
             .subscribe {

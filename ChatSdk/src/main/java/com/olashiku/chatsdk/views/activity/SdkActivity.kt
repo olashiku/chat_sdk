@@ -1,12 +1,15 @@
 package com.olashiku.chatsdk.views.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.olashiku.chatsdk.R
+import com.olashiku.chatsdk.service.BackgroundService
 import com.olashiku.chatsdk.viewmodel.AgentViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 open class SdkActivity : AppCompatActivity() {
 
@@ -27,9 +30,11 @@ open class SdkActivity : AppCompatActivity() {
     }
 
     private fun startSocketConnection() {
-        socketViewModel.apply {
-            initSocket()
-        }
+        val serviceIntent: Intent = Intent(
+            this,
+            BackgroundService::class.java
+        )
+        startService(serviceIntent)
 
     }
 

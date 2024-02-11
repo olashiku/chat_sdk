@@ -65,7 +65,7 @@ object Utils {
     }
 
     fun getCurrentUnixTimestamp(): Long {
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Instant.now().epochSecond
         } else {
             val calendar = Calendar.getInstance()

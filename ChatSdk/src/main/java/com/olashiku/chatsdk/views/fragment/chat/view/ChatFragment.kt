@@ -22,6 +22,7 @@ import com.olashiku.chatsdk.viewmodel.MessageViewModel
 import com.olashiku.chatsdk.viewmodel.SocketViewModel
 import com.olashiku.chatsdk.views.base.BaseFragment
 import com.olashiku.chatsdk.views.fragment.chat.adapter.MessageListAdapter
+import com.olashiku.chatsdkandroid.utils.Utils
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -29,6 +30,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
 class ChatFragment : BaseFragment() {
+
     private lateinit var binding: FragmentChatBinding
     private val messageAdapter = GroupAdapter<GroupieViewHolder>()
     private var mMessageAdapter: MessageListAdapter? = null
@@ -126,7 +128,7 @@ class ChatFragment : BaseFragment() {
 
     private fun messagingAction() {
         if (binding.messageEditText.getString().isNotEmpty()) {
-            socketViewModel.newMessage(binding.messageEditText.text.toString(), MessageType.text)
+            socketViewModel.newMessage(binding.messageEditText.text.toString(), MessageType.text, Utils.getCurrentUnixTimestamp())
             binding.messageEditText.text?.clear()
         }
     }

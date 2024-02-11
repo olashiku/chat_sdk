@@ -13,6 +13,7 @@ interface SdkEntryPoint {
     fun setupEntry(entryModel: EntryModel)
 }
 
+
 class SdkEntryPointImpl(val application: Application) : SdkEntryPoint {
 
     val paperPrefs:PaperPrefs by inject(PaperPrefs::class.java)

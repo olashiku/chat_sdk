@@ -47,7 +47,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
         socketRepository.getMessage(request)
     }
 
-    fun newMessage(text:String, messageType:String) {
+    fun newMessage(text:String, messageType:String,currentTimeStamp:Long) {
         val recipient = paperPrefs.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
         val message = Message(text, Constants.platform, messageType)
         val receiver = MsgReceiver("", recipient?.agentUserName?:"")
@@ -56,7 +56,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
             paperPrefs.getStringPref(PaperPrefs.ORGID)?:"",
             paperPrefs.getStringPref(PaperPrefs.USERID)?:""
         )
-        val request = NewMessageRequest(NetworkActions.newMessage, message, Utils.getUniqueRef(), Constants.platform, receiver, sender, Utils.getCurrentUnixTimestamp())
+        val request = NewMessageRequest(NetworkActions.newMessage, message, Utils.getUniqueRef(), Constants.platform, receiver, sender,currentTimeStamp)
         socketRepository.newMessage(request)
     }
 
