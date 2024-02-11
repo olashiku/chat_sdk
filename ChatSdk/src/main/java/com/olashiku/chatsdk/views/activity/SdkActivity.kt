@@ -19,9 +19,7 @@ open class SdkActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sdk)
-
-        //   initializeNavigation()
-        startSocketConnection()
+        startBackgroundService()
         setupObservers()
     }
 
@@ -29,20 +27,13 @@ open class SdkActivity : AppCompatActivity() {
         agentViewModel.getAgents()
     }
 
-    private fun startSocketConnection() {
-        val serviceIntent: Intent = Intent(
+    private fun startBackgroundService() {
+        val serviceIntent = Intent(
             this,
             BackgroundService::class.java
         )
         startService(serviceIntent)
-
     }
-
-//    private fun initializeNavigation() {
-//        navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
-//        navController = navHostFragment.navController
-//    }
 
 
     fun checkConnectionStatus(performSocketOperation: () -> Unit) {
@@ -50,7 +41,7 @@ open class SdkActivity : AppCompatActivity() {
             if (it) {
                 performSocketOperation.invoke()
             } else {
-                startSocketConnection()
+                startBackgroundService()
                 Toast.makeText(this, getString(R.string.lost_connection), Toast.LENGTH_SHORT)
                     .show()
             }
