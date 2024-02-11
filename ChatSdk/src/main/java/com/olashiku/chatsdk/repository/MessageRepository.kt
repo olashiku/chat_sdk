@@ -114,6 +114,7 @@ class MessageRepositoryImpl(
     }
 
     override fun newMessageResponse(message: String) {
+        println("newMessage $message")
         val response = message.getObject<NewMessageResponse>()
         val recipient = paperPref.getAnyPref<Connection>(PaperPrefs.CONNECTIONDETAILS)
 

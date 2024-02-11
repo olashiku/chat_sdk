@@ -137,7 +137,6 @@ class SocketRepositoryImpl(
     }
 
     override fun typingMessage(request: TypingRequest) {
-        println("typing_message $request" )
         socket.typingMessage(request)
     }
 
