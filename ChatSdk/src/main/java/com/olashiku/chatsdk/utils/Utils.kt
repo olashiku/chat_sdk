@@ -12,6 +12,7 @@ import org.json.JSONObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.Instant
+import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -66,7 +67,7 @@ object Utils {
 
     fun getCurrentUnixTimestamp(): Long {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Instant.now().epochSecond
+            Instant.now().atOffset(ZoneOffset.UTC).toEpochSecond()
         } else {
             val calendar = Calendar.getInstance()
             val date = calendar.time

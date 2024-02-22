@@ -14,7 +14,7 @@
             android:name=".views.activity.SdkActivity"
             android:exported="true">
         </activity>
-        <service android:name="com.olashiku.chatsdk.service.BackgroundService" android:exported="true"/>
+        <service android:name="com.olashiku.chatsdk.service.BackgroundService" android:exported="false"/>
 
     </application>
 

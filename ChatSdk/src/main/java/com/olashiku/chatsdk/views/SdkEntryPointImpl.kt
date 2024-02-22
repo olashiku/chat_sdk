@@ -1,22 +1,18 @@
-package com.olashiku.chatsdk
+package com.olashiku.chatsdk.views
 
 import android.app.Application
 import android.content.Intent
+import com.olashiku.chatsdk.GhabieEntryPoint
 import com.olashiku.chatsdk.model.EntryModel
 import com.olashiku.chatsdk.storage.PaperPrefs
 import com.olashiku.chatsdk.storage.savePref
 import com.olashiku.chatsdk.views.activity.SdkActivity
-import org.koin.java.KoinJavaComponent.inject
-
-interface SdkEntryPoint {
-    fun startSdk()
-    fun setupEntry(entryModel: EntryModel)
-}
+import org.koin.java.KoinJavaComponent
 
 
-class SdkEntryPointImpl(val application: Application) : SdkEntryPoint {
+class SdkEntryPointImpl(val application: Application) : GhabieEntryPoint {
 
-    val paperPrefs:PaperPrefs by inject(PaperPrefs::class.java)
+    val paperPrefs: PaperPrefs by KoinJavaComponent.inject(PaperPrefs::class.java)
 
     override fun startSdk() {
         val intent = Intent(application, SdkActivity::class.java)

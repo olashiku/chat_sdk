@@ -36,7 +36,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
                  PaperPrefs.USERID)?:"")
          val request = LoginRequest(
              NetworkActions.auth, "1232a23",
-             "{lat:38.8951, log:-77.0364}", "Android", sender, "1698495947"
+             "{lat:38.8951, log:-77.0364}", "Android", sender, Utils.getCurrentUnixTimestamp().toString()
          )
          socketRepository.loginUser(request)
      }
@@ -57,6 +57,7 @@ class SocketViewModel(private val socketRepository: SocketRepository):BaseViewMo
             paperPrefs.getStringPref(PaperPrefs.USERID)?:""
         )
         val request = NewMessageRequest(NetworkActions.newMessage, message, Utils.getUniqueRef(), Constants.platform, receiver, sender,currentTimeStamp)
+        println("request ${request}")
         socketRepository.newMessage(request)
     }
 
