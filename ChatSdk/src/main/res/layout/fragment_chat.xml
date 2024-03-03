@@ -192,7 +192,7 @@
             app:layout_constraintStart_toStartOf="@+id/sendMessageButton"
             app:layout_constraintTop_toTopOf="@+id/sendMessageButton" />
 
-        <com.olashiku.chatsdk.utils.CustomTypingEditText
+        <com.ghabie.chatsdk.utils.CustomTypingEditText
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

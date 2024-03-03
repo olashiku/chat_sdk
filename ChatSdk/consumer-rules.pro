@@ -33,7 +33,7 @@
 -dontwarn org.openjsse.javax.net.ssl.SSLSocket
 -dontwarn org.openjsse.net.ssl.OpenJSSE
 
--keep class com.olashiku.chatsdk.model.** { *; }
+-keep class com.ghabie.chatsdk.model.** { *; }
 -keep class * implements java.io.Serializable { *; }
 
 # Keep classes related to PaperDB
@@ -208,3 +208,6 @@
 
 # With R8 full mode generic signatures are stripped for classes that are not kept.
 -keep,allowobfuscation,allowshrinking class retrofit2.Response
+
+
+ -keep class com.ghabie.chatsdk.model.** { *; }

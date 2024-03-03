@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.olashiku.chatsdk.views.fragment.home.view.HomeFragment"
+        android:name="com.ghabie.chatsdk.views.fragment.home.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home_final" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
-        android:name="com.olashiku.chatsdk.views.fragment.message.view.MessageFragment"
+        android:name="com.ghabie.chatsdk.views.fragment.message.view.MessageFragment"
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" >
         <action
@@ -28,17 +28,17 @@
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.olashiku.chatsdk.views.fragment.help.view.HelpFragment"
+        android:name="com.ghabie.chatsdk.views.fragment.help.view.HelpFragment"
         android:label="fragment_help"
         tools:layout="@layout/fragment_help" />
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.olashiku.chatsdk.views.fragment.news.view.NewsFragment"
+        android:name="com.ghabie.chatsdk.views.fragment.news.view.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.olashiku.chatsdk.views.fragment.chat.view.ChatFragment"
+        android:name="com.ghabie.chatsdk.views.fragment.chat.view.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
 </navigation>

@@ -3,17 +3,18 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.21'
+    id 'maven-publish'
 }
 
 
 
 android {
-    namespace 'com.olashiku.chatsdk'
-    compileSdk 33
+    namespace 'com.ghabie.chatsdk'
+    compileSdk 34
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
         multiDexEnabled true
@@ -32,17 +33,14 @@ android {
         viewBinding = true
         dataBinding = true
         buildConfig true
-
     }
-
-
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "17"
     }
     kotlin {
         jvmToolchain(17)
@@ -83,12 +81,6 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.4.0-alpha03'
 
     //Scarlet WebSocket
-//    api "com.tinder.scarlet:websocket-okhttp:0.1.9"
-//    api 'com.tinder.scarlet:scarlet:0.1.9'
-//    api "com.tinder.scarlet:stream-adapter-rxjava2:0.1.9"
-//    api "com.tinder.scarlet:message-adapter-gson:0.1.9"
-//    api "com.tinder.scarlet:lifecycle-android:0.1.9"
-//    api "com.tinder.scarlet:stream-adapter-rxjava2:0.1.9"
     api 'com.tinder.scarlet:scarlet:0.1.12'
 
     // okhttp logging interceptor
