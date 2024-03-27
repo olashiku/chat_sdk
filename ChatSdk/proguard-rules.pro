@@ -205,3 +205,4 @@
 -keep,allowobfuscation,allowshrinking class retrofit2.Response
 
  -keep class com.ghabie.chatsdk.model.** { *; }
+ -dontwarn java.lang.invoke.StringConcatFactory

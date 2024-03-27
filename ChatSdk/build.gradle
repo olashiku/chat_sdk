@@ -4,9 +4,30 @@ plugins {
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.21'
     id 'maven-publish'
+    id 'signing'
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.ghabie.chatsdk'
+            artifactId = 'chatsdk'
+            version = "0.1-SNAPSHOT"
+            artifact("$buildDir/outputs/aar/ChatSdk-release.aar")
+        }
+    }
+}
 
+repositories {
+//     maven {
+//         name  "GithubPackages"
+//         url  uri("https://maven.pkg.github.com/olashiku")
+//         credentials{
+//             username = ""
+//             password = ""
+//         }
+//     }
+}
 
 android {
     namespace 'com.ghabie.chatsdk'
@@ -29,7 +50,7 @@ android {
         }
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         dataBinding = true
         buildConfig true

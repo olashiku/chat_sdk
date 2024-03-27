@@ -11,7 +11,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' } 
+        maven { url 'https://jitpack.io' }
+
+        maven {
+            credentials {
+                username = "$usr"
+                password = "$pwd"
+            }
+            url = "https://maven.pkg.jetbrains.space/gabie/p/a6d967ab-c1ce-4129-8ab8-023af6b27638/my-maven-repo"
+        }
     }
 }
 rootProject.name = "ChatSdkAndroid"

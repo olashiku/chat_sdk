@@ -211,3 +211,4 @@
 
 
  -keep class com.ghabie.chatsdk.model.** { *; }
+ -dontwarn java.lang.invoke.StringConcatFactory

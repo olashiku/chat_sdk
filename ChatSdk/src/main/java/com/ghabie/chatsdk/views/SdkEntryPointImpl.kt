@@ -23,8 +23,5 @@ class SdkEntryPointImpl(val application: Application) : GhabieEntryPoint {
     override fun setupEntry(entryModel: EntryModel){
         paperPrefs.savePref(PaperPrefs.ORGID, entryModel.orgId)
         paperPrefs.savePref(PaperPrefs.USERID, entryModel.userid)
-
     }
-
-
 }
